@@ -5,36 +5,71 @@ import Count from "../../components/Count";
 
 const Operation = {
   Add: "Add",
-  Substract: "Substract",
+  Subtract: "Subtract",
   Multiply: "Multiply",
   Divide: "Divide",
-  Reset: "Reset",
 } as const;
 type Operation = (typeof Operation)[keyof typeof Operation];
+
+const OPERATIONS: {
+  label: string;
+  value: Operation;
+}[] = [
+  {
+    label: "+",
+    value: Operation.Add,
+  },
+  {
+    label: "-",
+    value: Operation.Subtract,
+  },
+  {
+    label: "*",
+    value: Operation.Multiply,
+  },
+  {
+    label: "/",
+    value: Operation.Divide,
+  },
+];
+
+const calculate = (
+  operation: Operation,
+  left: number,
+  right: number,
+): number | null => {
+  if (Number.isNaN(left) || Number.isNaN(right)) {
+    return null;
+  }
+  switch (operation) {
+    case Operation.Add:
+      return left + right;
+    case Operation.Subtract:
+      return left - right;
+    case Operation.Multiply:
+      return left * right;
+    case Operation.Divide:
+      if (right === 0) {
+        return null;
+      }
+      return left / right;
+    default:
+      throw new Error("Unknown operation");
+  }
+};
 
 function CalculatorPage() {
   const [leftValue, setLeftValue] = useState("");
   const [rightValue, setRightValue] = useState("");
   const [operation, setOperation] = useState<Operation>(Operation.Add);
-
-  const result = (() => {
-    switch (operation) {
-      case Operation.Add:
-        return Number(leftValue) + Number(rightValue);
-      case Operation.Substract:
-        return Number(leftValue) - Number(rightValue);
-      case Operation.Multiply:
-        return Number(leftValue) * Number(rightValue);
-      case Operation.Reset:
-        return 0;
-      case Operation.Divide:
-        if (rightValue === "0") {
-          return "Impossible";
-        } else return Number(leftValue) / Number(rightValue);
-      default:
-        throw new Error("Unknown operation");
-    }
-  })();
+  const left = Number(leftValue);
+  const right = Number(rightValue);
+  const result = calculate(operation, left, right);
+  const handleReset = () => {
+    setLeftValue("");
+    setRightValue("");
+    setOperation(Operation.Add);
+  };
 
   return (
     <section id="center">
@@ -54,12 +89,13 @@ function CalculatorPage() {
         />
       </div>
       <div>
-        <Button onClick={() => setOperation(Operation.Add)}>+</Button>
-        <Button onClick={() => setOperation(Operation.Substract)}>-</Button>
-        <Button onClick={() => setOperation(Operation.Multiply)}>x</Button>
-        <Button onClick={() => setOperation(Operation.Divide)}>/</Button>
+        {OPERATIONS.map(({ label, value }) => (
+          <Button key={value} onClick={() => setOperation(value)}>
+            {label}
+          </Button>
+        ))}
       </div>
-      <Button onClick={() => setOperation(Operation.Reset)}>reset</Button>
+      <Button onClick={handleReset}>reset</Button>
       <Count value={result} />
     </section>
   );

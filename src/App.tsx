@@ -11,6 +11,9 @@ function App() {
         <li>
           <Link to="/exercice-02-calculator">Exercice 02 - Calculator</Link>
         </li>
+        <li>
+          <Link to="/exercice-03-todo">Exercice 03 - Todo</Link>
+        </li>
       </ul>
     </section>
   );

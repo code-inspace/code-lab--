@@ -1,6 +1,6 @@
 interface CountProps {
-  value: number | string;
+  value: number | null;
 }
 export default function Count({ value }: CountProps) {
-  return <div>{value}</div>;
+  return <div>{value || "Impossible"}</div>;
 }
