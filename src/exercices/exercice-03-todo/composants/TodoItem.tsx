@@ -1,13 +1,13 @@
-import { type Todo } from "../types";
 import Button from "../../../components/Button";
+import type { Todo } from "../models/Todo";
 interface TodoItemProps {
   todo: Todo;
-  deleteTodo: (id: string) => void;
+  removeTodo: (id: string) => void;
   toggleTodo: (id: string) => void;
 }
 const TodoItem = ({
   todo: { id, label, completed },
-  deleteTodo,
+  removeTodo,
   toggleTodo,
 }: TodoItemProps) => {
   return (
@@ -18,7 +18,7 @@ const TodoItem = ({
         onChange={() => toggleTodo(id)}
       />
       <p>{label}</p>
-      <Button onClick={() => deleteTodo(id)}>Delete</Button>
+      <Button onClick={() => removeTodo(id)}>Delete</Button>
     </div>
   );
 };

@@ -1,14 +1,14 @@
-import type { Todo } from "../types";
+import type { Todo } from "../models/Todo";
 import TodoItem from "./TodoItem";
 
 const TodoList = ({
   todos,
-  deleteTodo,
+  removeTodo,
   toggleTodo,
 }: {
   todos: Todo[];
   toggleTodo: (id: string) => void;
-  deleteTodo: (id: string) => void;
+  removeTodo: (id: string) => void;
 }) => {
   if (todos.length === 0) {
     return <p>La liste est vide</p>;
@@ -21,7 +21,7 @@ const TodoList = ({
           todo={todo}
           key={todo.id}
           toggleTodo={toggleTodo}
-          deleteTodo={deleteTodo}
+          removeTodo={removeTodo}
         />
       ))}
     </div>

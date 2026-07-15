@@ -1,50 +1,39 @@
 import { useState } from "react";
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
-import type { Todo } from "../types";
 
-const TodoForm = ({ createTodo }: { createTodo: (todo: Todo) => void }) => {
+interface TodoFormProps {
+  addTodo: (label: string) => void;
+}
+
+const TodoForm = ({ addTodo }: TodoFormProps) => {
   const [formValue, setFormValue] = useState("");
-  const [displayError, setDisplayError] = useState(false);
+  const [error, setError] = useState(null);
 
-  const validateForm = () => {
-    console.log(formValue);
+  const handleSubmit = () => {
     const trimmedValue = formValue.trim();
-    console.log(trimmedValue);
     if (!trimmedValue) {
-      setDisplayError(true);
+      setError("Erreur : le texte n'est pas valide.");
       return;
     }
-    setDisplayError(false);
-    createTodo({
-      completed: false,
-      id: crypto.randomUUID(),
-      label: trimmedValue,
-    });
+    setError(null);
+    addTodo(trimmedValue);
     setFormValue("");
   };
-
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        validateForm();
+        handleSubmit();
       }}
     >
       <Input
         type="text"
         value={formValue}
-        onChange={(e) => {
-          setFormValue(e.target.value);
-          if (displayError) {
-            setDisplayError(false);
-          }
-        }}
+        onChange={(e) => setFormValue(e.target.value)}
         label="New task"
       />
-      {displayError && (
-        <p style={{ color: "red" }}>Erreur : le texte n'est pas valide.</p>
-      )}
+      {error !== null && <p style={{ color: "red" }}>{error}</p>}
       <Button type="submit">Add</Button>
     </form>
   );
