@@ -14,6 +14,9 @@ function App() {
         <li>
           <Link to="/exercice-03-todo">Exercice 03 - Todo</Link>
         </li>
+        <li>
+          <Link to="/exercice-04-todo-advanced">Exercice 04 - Todo Advanced</Link>
+        </li>
       </ul>
     </section>
   );

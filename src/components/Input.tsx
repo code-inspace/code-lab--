@@ -1,7 +1,7 @@
 import type { InputHTMLAttributes, ReactNode } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: ReactNode;
+  label?: ReactNode;
 }
 
 export default function Input({ label, ...props }: InputProps) {

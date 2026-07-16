@@ -7,6 +7,7 @@ import App from "./App.tsx";
 import CounterPage from "./exercices/exercice-01-counter/counterPage.tsx";
 import CalculatorPage from "./exercices/exercice-02-calculatrice/calculatorPage.tsx";
 import TodoPage from "./exercices/exercice-03-todo/todoPage.tsx";
+import TodoPageAdvanced from "./exercices/exercice-04-todo-advanced/todoPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "/exercice-03-todo",
     element: <TodoPage />,
+  },
+  {
+    path: "/exercice-04-todo-advanced",
+    element: <TodoPageAdvanced />,
   },
 ]);
 
